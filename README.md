@@ -138,7 +138,26 @@ function doSomething() {
 
 ## Extend handler object ##
 
-`handler.Handler` is the constructor of handler's `this` object. Change its prototype to extend `this` object.
+`handler.Handler` is the constructor of handler's `this` object. Use `Handler.extend` to add new methods to `this` object.
+
+Method `init` is a special case. If it exists in prototype, `Handler` will call it in constructor.
+
+```javascript
+var handler = require('express-handler');
+var Handler = handler.Handler;
+
+Handler.extend({
+	f: function() {
+		// ...
+	}
+});
+
+app.get('/foo', handler(foo));
+
+function foo() {
+	this.f();
+};
+```
 
 ## License ##
 
